@@ -6,7 +6,7 @@ auth.define_tables()
 crud = Crud(db)
 
 db.define_table('agencies',
-    Field('childcare_provider_id', 'integer', requires=IS_NOT_EMPTY()),
+    Field('childcare_provider_id', 'integer', requires=IS_NOT_EMPTY(), unique=True),
     Field('facility_type_id', 'reference facility_types'),
     Field('name', unique=True, requires=IS_NOT_EMPTY()),
     Field('street', requires=IS_NOT_EMPTY()),
