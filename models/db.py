@@ -1,5 +1,3 @@
-db = DAL('sqlite://storage.sqlite')
-
 from gluon.tools import *
 auth = Auth(db)
 auth.define_tables()
