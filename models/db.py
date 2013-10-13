@@ -29,7 +29,7 @@ db.define_table('facility_types',
     format='%(name)s') 
 
 db.define_table('phone_numbers',
-    Field('agency_id', 'references agencies'),
+    Field('agency_id', 'reference agencies'),
     Field('phone_number_type_id', 'references phone_number_types'),
     Field('phone_number', requires=IS_NOT_EMPTY()),
     Field('created_on', 'datetime', default=request.now),
@@ -43,8 +43,8 @@ db.define_table('phone_number_types',
     format='%(name)s') 
 
 db.define_table('program_types',
-    Field('agency_id', 'references agencies'),
-    Field('name', 'references phone_number_types', requires=IS_NOT_EMPTY()),
+    Field('agency_id', 'reference agencies'),
+    Field('name', 'reference phone_number_types', requires=IS_NOT_EMPTY()),
     Field('created_on', 'datetime', default=request.now),
     Field('created_by', 'reference auth_user', default=auth.user_id),
     format='%(name)s')
