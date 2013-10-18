@@ -1,7 +1,9 @@
 from gluon.tools import *
+from gluon.dal import DAL, Field, geoPoint, geoLine, geoPolygon
 auth = Auth(db)
 auth.define_tables()
 crud = Crud(db)
+
 
 db.define_table('agencies',
     Field('childcare_provider_id', 'integer', requires=IS_NOT_EMPTY(), unique=True),
@@ -46,6 +48,11 @@ db.define_table('program_types',
     Field('created_on', 'datetime', default=request.now),
     Field('created_by', 'reference auth_user', default=auth.user_id),
     format='%(name)s')
+
+db.define_table('geolocation',
+    Field('agency_id', 'references agencies'),
+    Field('location', 'geometry()')    
+    )
 
 db.agencies.facility_type_id.requires = IS_IN_DB(db, db.facility_types.id, '%(name)s')
 db.phone_numbers.phone_number_type_id.requires = IS_IN_DB(db, db.phone_number_types.id, '%(name)s')
