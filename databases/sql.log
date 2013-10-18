@@ -1,0 +1,203 @@
+timestamp: 2013-10-10T15:19:11.535340
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2013-10-10T15:19:12.354020
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-10-10T15:19:13.440513
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-10-10T15:19:14.200343
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2013-10-10T15:19:15.161315
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-10-10T15:19:16.360269
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2013-10-10T15:19:17.682847
+CREATE TABLE agencies(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    childcare_provider_id INTEGER UNIQUE,
+    facility_type_id INTEGER REFERENCES facility_types (id) ON DELETE CASCADE,
+    name CHAR(512) UNIQUE,
+    street CHAR(512),
+    county CHAR(512),
+    email CHAR(512),
+    min_age INTEGER,
+    max_age INTEGER,
+    capacity INTEGER,
+    annual_inspection_date TIMESTAMP,
+    unannounced_inspection_date TIMESTAMP,
+    in_compliance CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-10-10T15:19:19.208893
+CREATE TABLE facility_types(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512) UNIQUE,
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-10-10T15:19:20.375401
+CREATE TABLE phone_numbers(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    agency_id INTEGER REFERENCES agencies (id) ON DELETE CASCADE,
+    phone_number_type_id INTEGER REFERENCES phone_number_types (id) ON DELETE CASCADE,
+    phone_number CHAR(512),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-10-10T15:19:21.410326
+CREATE TABLE phone_number_types(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-10-10T15:19:22.297395
+CREATE TABLE program_types(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    agency_id INTEGER REFERENCES agencies (id) ON DELETE CASCADE,
+    name INTEGER REFERENCES phone_number_types (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-10-10T17:52:22.484063
+CREATE TABLE files(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filename CHAR(512) UNIQUE,
+    file CHAR(512)
+);
+success!
+success!
+timestamp: 2013-10-11T15:55:36.107820
+CREATE TABLE agency_program_types(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    agency_id INTEGER REFERENCES agencies (id) ON DELETE CASCADE,
+    program_type_id INTEGER REFERENCES program_types (id) ON DELETE CASCADE
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
