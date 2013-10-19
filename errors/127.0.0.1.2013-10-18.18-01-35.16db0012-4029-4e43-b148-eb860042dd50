@@ -1,0 +1,1086 @@
+(dp1
+S'output'
+p2
+S"<class 'gluon.contrib.pg8000.errors.ProgrammingError'> ('ERROR', '42883', 'function addgeometrycolumn(unknown, unknown, unknown, integer, unknown, integer) does not exist')"
+p3
+sS'layer'
+p4
+S'/home/www-data/web2py/applications/childcare/models/db.py'
+p5
+sS'code'
+p6
+S"from gluon.tools import *\nfrom gluon.dal import DAL, Field, geoPoint, geoLine, geoPolygon\nauth = Auth(db)\nauth.define_tables()\ncrud = Crud(db)\n\ndb.define_table('facility_types',\n    Field('name', unique=True, requires=IS_NOT_EMPTY()),\n    Field('created_on', 'datetime', default=request.now),\n    Field('created_by', 'reference auth_user', default=auth.user_id),\n    format='%(name)s') \n\ndb.define_table('agencies',\n    Field('childcare_provider_id', 'integer', requires=IS_NOT_EMPTY(), unique=True),\n    Field('facility_type_id', 'reference facility_types'),\n    Field('name', unique=True, requires=IS_NOT_EMPTY()),\n    Field('street', requires=IS_NOT_EMPTY()),\n    Field('county', requires=IS_NOT_EMPTY()),\n    Field('email', requires=IS_NOT_EMPTY()),\n    Field('min_age', 'integer', requires=IS_NOT_EMPTY()),\n    Field('max_age', 'integer', requires=IS_NOT_EMPTY()),\n    Field('capacity', 'integer', requires=IS_NOT_EMPTY()),\n    Field('annual_inspection_date', 'datetime', requires=IS_NOT_EMPTY()),\n    Field('unannounced_inspection_date', 'datetime'),\n    Field('in_compliance', 'boolean'),\n    Field('created_on', 'datetime', default=request.now),\n    Field('created_by', 'reference auth_user', default=auth.user_id),\n    format='%(name)s')\n\ndb.define_table('phone_number_types',\n    Field('name', requires=IS_NOT_EMPTY()),\n    Field('created_on', 'datetime', default=request.now),\n    Field('created_by', 'reference auth_user', default=auth.user_id),\n    format='%(name)s')     \n\ndb.define_table('phone_numbers',\n    Field('agency_id', 'references agencies'),\n    Field('phone_number_type_id', 'reference phone_number_types'),\n    Field('agency_id', 'reference agencies'),\n    Field('phone_number_type_id', 'references phone_number_types'),\n    Field('phone_number', requires=IS_NOT_EMPTY()),\n    Field('created_on', 'datetime', default=request.now),\n    Field('created_by', 'reference auth_user', default=auth.user_id),\n    format='%(phone_number)s') \n\ndb.define_table('program_types',\n    Field('agency_id', 'reference agencies'),\n    Field('name', requires=IS_NOT_EMPTY()),\n    Field('created_on', 'datetime', default=request.now),\n    Field('created_by', 'reference auth_user', default=auth.user_id),\n    format='%(name)s')\n\n\ndb.define_table('agency_program_types',\n                Field('agency_id', 'reference agencies'),\n                Field('program_type_id', 'reference program_types')\n)\n\ndb.define_table('files',\n    Field('filename', unique=True),\n    Field('file', 'upload'),\n    format = '%(filename)s')\n\ndb.define_table('geolocation',\n    Field('agency_id', 'references agencies'),\n    Field('location', 'geometry()')    \n    )\n\n\ndb.agencies.facility_type_id.requires = IS_IN_DB(db, db.facility_types.id, '%(name)s')\ndb.phone_numbers.phone_number_type_id.requires = IS_IN_DB(db, db.phone_number_types.id, '%(name)s')\n\n"
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'gluon.contrib.pg8000.errors'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of ProgrammingError object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of ProgrammingError object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of ProgrammingError object>'
+p19
+sS'__dict__'
+p20
+S'{}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of ProgrammingError object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S"<method-wrapper '__init__' of ProgrammingError object>"
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of ProgrammingError object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of ProgrammingError object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of ProgrammingError object>'
+p35
+sS'__class__'
+p36
+S"<class 'gluon.contrib.pg8000.errors.ProgrammingError'>"
+p37
+sS'__doc__'
+p38
+S'None'
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of ProgrammingError object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of ProgrammingError object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of ProgrammingError object>"
+p45
+sS'args'
+p46
+S"('ERROR', '42883', 'function addgeometrycolumn(unknown, unknown, unknown, integer, unknown, integer) does not exist')"
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'__unicode__'
+p50
+S'<built-in method __unicode__ of ProgrammingError object>'
+p51
+sS'__delattr__'
+p52
+S"<method-wrapper '__delattr__' of ProgrammingError object>"
+p53
+sS'__repr__'
+p54
+S"<method-wrapper '__repr__' of ProgrammingError object>"
+p55
+sS'__hash__'
+p56
+S"<method-wrapper '__hash__' of ProgrammingError object>"
+p57
+ssS'evalue'
+p58
+S"('ERROR', '42883', 'function addgeometrycolumn(unknown, unknown, unknown, integer, unknown, integer) does not exist')"
+p59
+sS'request'
+p60
+cgluon.html
+XML_unpickle
+p61
+(S's\xc8m\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>childcare</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>appadmin</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-97288c8a-75d9-49f5-b6a5-8ecd657802e6<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_childcare</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_images</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-7f4a2b06-f482-40dc-b551-a8d134f0608c<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_test</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-4e69ca56-aa6c-4e80-83a8-edc6c482e1bd<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-e69f2ff8-6808-4500-b876-7d42b74b55c0<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">DOCUMENT_ROOT</td><td style="vertical-align:top;">:</td><td><div>/var/www</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">GATEWAY_INTERFACE</td><td style="vertical-align:top;">:</td><td><div>CGI/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-GB,en-US;q=0.8,en;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-e69f2ff8-6808-4500-b876-7d42b74b55c0; session_id_images=127.0.0.1-7f4a2b06-f482-40dc-b551-a8d134f0608c; session_id_test=127.0.0.1-4e69ca56-aa6c-4e80-83a8-edc6c482e1bd; session_id_childcare=127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1; session_id_admin=127.0.0.1-97288c8a-75d9-49f5-b6a5-8ecd657802e6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>localhost</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_TRANSLATED</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>41533</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_URI</td><td style="vertical-align:top;">:</td><td><div>/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_FILENAME</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_ADMIN</td><td style="vertical-align:top;">:</td><td><div>[no address given]</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>localhost</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SIGNATURE</td><td style="vertical-align:top;">:</td><td><div>&lt;address&gt;Apache/2.2.22 (Ubuntu) Server at localhost Port 443&lt;/address&gt;\n</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Apache/2.2.22 (Ubuntu)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SSL_TLS_SNI</td><td style="vertical-align:top;">:</td><td><div>localhost</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/www-data/web2py/applications/childcare/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">document_root</td><td style="vertical-align:top;">:</td><td><div>/var/www</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gateway_interface</td><td style="vertical-align:top;">:</td><td><div>CGI/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-GB,en-US;q=0.8,en;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-e69f2ff8-6808-4500-b876-7d42b74b55c0; session_id_images=127.0.0.1-7f4a2b06-f482-40dc-b551-a8d134f0608c; session_id_test=127.0.0.1-4e69ca56-aa6c-4e80-83a8-edc6c482e1bd; session_id_childcare=127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1; session_id_admin=127.0.0.1-97288c8a-75d9-49f5-b6a5-8ecd657802e6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>localhost</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.application_group</td><td style="vertical-align:top;">:</td><td><div>127.0.1.1|</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.callable_object</td><td style="vertical-align:top;">:</td><td><div>application</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.enable_sendfile</td><td style="vertical-align:top;">:</td><td><div>0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.handler_script</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.input_chunked</td><td style="vertical-align:top;">:</td><td><div>0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.listener_host</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.listener_port</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.process_group</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.queue_start</td><td style="vertical-align:top;">:</td><td><div>1382130094820459</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.request_handler</td><td style="vertical-align:top;">:</td><td><div>wsgi-script</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.script_reloading</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>3</div></td></tr><tr><td><div>4</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_application_group</td><td style="vertical-align:top;">:</td><td><div>127.0.1.1|</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_callable_object</td><td style="vertical-align:top;">:</td><td><div>application</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_enable_sendfile</td><td style="vertical-align:top;">:</td><td><div>0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_handler_script</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_input_chunked</td><td style="vertical-align:top;">:</td><td><div>0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_listener_host</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_listener_port</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_process_group</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_queue_start</td><td style="vertical-align:top;">:</td><td><div>1382130094820459</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_request_handler</td><td style="vertical-align:top;">:</td><td><div>wsgi-script</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_script_reloading</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">mod_wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>3</div></td></tr><tr><td><div>4</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_translated</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>41533</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_filename</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/wsgihandler.py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_admin</td><td style="vertical-align:top;">:</td><td><div>[no address given]</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>localhost</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>443</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_signature</td><td style="vertical-align:top;">:</td><td><div>&lt;address&gt;Apache/2.2.22 (Ubuntu) Server at localhost Port 443&lt;/address&gt;\n</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Apache/2.2.22 (Ubuntu)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">ssl_tls_sni</td><td style="vertical-align:top;">:</td><td><div>localhost</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.6.4-stable+timestamp.2013.09.22.01.43.37</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Log object at 0x7f3ed4a620b0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;built-in method file_wrapper of mod_wsgi.Adapter object at 0x7f3ed4c18af8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Input object at 0x7f3ed4a62770&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>https</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Log object at 0x7f3ed4a620b0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;built-in method file_wrapper of mod_wsgi.Adapter object at 0x7f3ed4c18af8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;mod_wsgi.Input object at 0x7f3ed4a62770&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>https</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/applications/childcare/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/www-data/web2py/applications/childcare/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>mystic</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>localhost</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.6.4-stable+timestamp.2013.09.22.01.43.37</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2013, 10, 18, 18, 1, 35, 75323)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/childcare/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2013, 10, 18, 21, 1, 35, 75333)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>childcare/127.0.0.1.2013-10-18.18-01-35.16db0012-4029-4e43-b148-eb860042dd50</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x7f3ed4c1b0d0&gt;</div></td></tr></table></div>'
+tRp62
+sS'frames'
+p63
+(lp64
+(dp65
+S'file'
+p66
+S'/home/www-data/web2py/gluon/restricted.py'
+p67
+sS'dump'
+p68
+(dp69
+S'environment'
+p70
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, 'CENTER': <class 'gluon.html.CENTER'>, ...}"
+p71
+sS'ccode'
+p72
+S'<code object <module> at 0x7f3ed4cf53b0, file "/...2py/applications/childcare/models/db.py", line 1>'
+p73
+ssS'lnum'
+p74
+I217
+sS'lines'
+p75
+(dp76
+I212
+S'    try:'
+p77
+sI213
+S'        if isinstance(code, types.CodeType):'
+p78
+sI214
+S'            ccode = code'
+p79
+sI215
+S'        else:'
+p80
+sI216
+S'            ccode = compile2(code, layer)'
+p81
+sI217
+S'        exec ccode in environment'
+p82
+sI218
+S'    except HTTP:'
+p83
+sI219
+S'        raise'
+p84
+sI220
+S'    except RestrictedError:'
+p85
+sI221
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p86
+ssS'call'
+p87
+S'(code="from gluon.tools import *\\nfrom gluon.dal import ...IN_DB(db, db.phone_number_types.id, \'%(name)s\')\\n\\n", environment={\'A\': <class \'gluon.html.A\'>, \'ANY_OF\': <class \'gluon.validators.ANY_OF\'>, \'Auth\': <class \'gluon.tools.Auth\'>, \'B\': <class \'gluon.html.B\'>, \'BEAUTIFY\': <class \'gluon.html.BEAUTIFY\'>, \'BODY\': <class \'gluon.html.BODY\'>, \'BR\': <class \'gluon.html.BR\'>, \'BUTTON\': <class \'gluon.html.BUTTON\'>, \'CAT\': <class \'gluon.html.CAT\'>, \'CENTER\': <class \'gluon.html.CENTER\'>, ...}, layer=\'/home/www-data/web2py/applications/childcare/models/db.py\')'
+p88
+sS'func'
+p89
+S'restricted'
+p90
+sa(dp91
+g66
+S'/home/www-data/web2py/applications/childcare/models/db.py'
+p92
+sg68
+(dp93
+S'Field'
+p94
+S"<class 'gluon.dal.Field'>"
+p95
+ssg74
+I66
+sg75
+(dp96
+I64
+S"db.define_table('geolocation',"
+p97
+sI65
+S"    Field('agency_id', 'references agencies'),"
+p98
+sI66
+S"    Field('location', 'geometry()')"
+p99
+sI67
+S'    )'
+p100
+sI68
+S''
+sI69
+S''
+sI70
+S"db.agencies.facility_type_id.requires = IS_IN_DB(db, db.facility_types.id, '%(name)s')"
+p101
+sI61
+S"    Field('file', 'upload'),"
+p102
+sI62
+S"    format = '%(filename)s')"
+p103
+sI63
+S''
+ssg87
+S'()'
+p104
+sg89
+S'<module>'
+p105
+sa(dp106
+g66
+S'/home/www-data/web2py/gluon/dal.py'
+p107
+sg68
+(dp108
+S'fields'
+p109
+S'(<gluon.dal.Field object>, <gluon.dal.Field object>)'
+p110
+sS'self'
+p111
+S'<DAL uri="postgres:******@localhost/childcare, lazy_tables=True">'
+p112
+sS'args'
+p113
+g21
+sS'tablename'
+p114
+S"'geolocation'"
+p115
+sS'table'
+p116
+S'undefined'
+p117
+sS'self.lazy_define_table'
+p118
+S'<bound method DAL.lazy_define_table of <DAL uri=...s:******@localhost/childcare, lazy_tables=True">>'
+p119
+ssg74
+I7895
+sg75
+(dp120
+I7890
+S'                    % (tablename,invalid_args))'
+p121
+sI7891
+S'        if self._lazy_tables and not tablename in self._LAZY_TABLES:'
+p122
+sI7892
+S'            self._LAZY_TABLES[tablename] = (tablename,fields,args)'
+p123
+sI7893
+S'            table = None'
+p124
+sI7894
+S'        else:'
+p125
+sI7895
+S'            table = self.lazy_define_table(tablename,*fields,**args)'
+p126
+sI7896
+S'        if not tablename in self.tables:'
+p127
+sI7897
+S'            self.tables.append(tablename)'
+p128
+sI7898
+S'        return table'
+p129
+sI7899
+S''
+ssg87
+S'(self=<DAL uri="postgres:******@localhost/childcare, lazy_tables=True">, tablename=\'geolocation\', *fields=(<gluon.dal.Field object>, <gluon.dal.Field object>), **args={})'
+p130
+sg89
+S'define_table'
+p131
+sa(dp132
+g66
+S'/home/www-data/web2py/gluon/dal.py'
+p133
+sg68
+(dp134
+S'polymodel'
+p135
+S'None'
+p136
+ssg74
+I7932
+sg75
+(dp137
+I7936
+S'            table._dbt = None'
+p138
+sI7927
+S'            try:'
+p139
+sI7928
+S'                GLOBAL_LOCKER.acquire()'
+p140
+sI7929
+S'                self._lastsql = self._adapter.create_table('
+p141
+sI7930
+S'                    table,migrate=migrate,'
+p142
+sI7931
+S'                    fake_migrate=fake_migrate,'
+p143
+sI7932
+S'                    polymodel=polymodel)'
+p144
+sI7933
+S'            finally:'
+p145
+sI7934
+S'                GLOBAL_LOCKER.release()'
+p146
+sI7935
+S'        else:'
+p147
+ssg87
+S'(self=<DAL uri="postgres:******@localhost/childcare, lazy_tables=True">, tablename=\'geolocation\', *fields=(<gluon.dal.Field object>, <gluon.dal.Field object>), **args={})'
+p148
+sg89
+S'lazy_define_table'
+p149
+sa(dp150
+g66
+S'/home/www-data/web2py/gluon/dal.py'
+p151
+sg68
+(dp152
+S'query'
+p153
+S'"SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);"'
+p154
+sS'self'
+p155
+S'<gluon.dal.PostgreSQLAdapter object>'
+p156
+sS'self.execute'
+p157
+S'<bound method PostgreSQLAdapter.execute of <gluon.dal.PostgreSQLAdapter object>>'
+p158
+ssg74
+I1007
+sg75
+(dp159
+I1002
+S'                self.create_sequence_and_triggers(query,table)'
+p160
+sI1003
+S'                table._db.commit()'
+p161
+sI1004
+S'                # Postgres geom fields are added now,'
+p162
+sI1005
+S'                # after the table has been created'
+p163
+sI1006
+S'                for query in postcreation_fields:'
+p164
+sI1007
+S'                    self.execute(query)'
+p165
+sI1008
+S'                    table._db.commit()'
+p166
+sI1009
+S'            if table._dbt:'
+p167
+sI1010
+S"                tfile = self.file_open(table._dbt, 'w')"
+p168
+sI1011
+S'                pickle.dump(sql_fields, tfile)'
+p169
+ssg87
+S'(self=<gluon.dal.PostgreSQLAdapter object>, table=<Table geolocation (id,agency_id,location)>, migrate=True, fake_migrate=False, polymodel=None)'
+p170
+sg89
+S'create_table'
+p171
+sa(dp172
+g66
+S'/home/www-data/web2py/gluon/dal.py'
+p173
+sg68
+(dp174
+S'a'
+S'("SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);",)'
+p175
+sS'self'
+p176
+S'<gluon.dal.PostgreSQLAdapter object>'
+p177
+sS'b'
+g21
+sS'self.log_execute'
+p178
+S'<bound method PostgreSQLAdapter.log_execute of <gluon.dal.PostgreSQLAdapter object>>'
+p179
+ssg74
+I1833
+sg75
+(dp180
+I1828
+S'        self.db._timings.append((command,time.time()-t0))'
+p181
+sI1829
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p182
+sI1830
+S'        return ret'
+p183
+sI1831
+S''
+sI1832
+S'    def execute(self, *a, **b):'
+p184
+sI1833
+S'        return self.log_execute(*a, **b)'
+p185
+sI1834
+S''
+sI1835
+S'    def represent(self, obj, fieldtype):'
+p186
+sI1836
+S'        field_is_type = fieldtype.startswith'
+p187
+sI1837
+S'        if isinstance(obj, CALLABLETYPES):'
+p188
+ssg87
+S'(self=<gluon.dal.PostgreSQLAdapter object>, *a=("SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);",), **b={})'
+p189
+sg89
+S'execute'
+p190
+sa(dp191
+g66
+S'/home/www-data/web2py/gluon/dal.py'
+p192
+sg68
+(dp193
+S'a'
+S'("SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);",)'
+p194
+sS'b'
+g21
+sS'self'
+p195
+S'<gluon.dal.PostgreSQLAdapter object>'
+p196
+sS'ret'
+p197
+g117
+sS'self.cursor'
+p198
+S'<gluon.contrib.pg8000.dbapi.CursorWrapper object>'
+p199
+sS'command'
+p200
+S'"SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);"'
+p201
+sS'self.cursor.execute'
+p202
+S'<bound method CursorWrapper._fn of <gluon.contrib.pg8000.dbapi.CursorWrapper object>>'
+p203
+ssg74
+I1827
+sg75
+(dp204
+I1824
+S"            LOGGER.debug('SQL: %s' % command)"
+p205
+sI1825
+S'        self.db._lastsql = command'
+p206
+sI1826
+S'        t0 = time.time()'
+p207
+sI1827
+S'        ret = self.cursor.execute(command, *a[1:], **b)'
+p208
+sI1828
+S'        self.db._timings.append((command,time.time()-t0))'
+p209
+sI1829
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p210
+sI1830
+S'        return ret'
+p211
+sI1831
+S''
+sI1822
+S'            command = self.filter_sql_command(command)'
+p212
+sI1823
+S'        if self.db._debug:'
+p213
+ssg87
+S'(self=<gluon.dal.PostgreSQLAdapter object>, *a=("SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);",), **b={})'
+p214
+sg89
+S'log_execute'
+p215
+sa(dp216
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/dbapi.py'
+p217
+sg68
+(dp218
+S'self'
+p219
+S'<gluon.contrib.pg8000.dbapi.CursorWrapper object>'
+p220
+sS'args'
+p221
+S'("SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);",)'
+p222
+sS'fn'
+p223
+S'<function execute>'
+p224
+sS'kwargs'
+p225
+g21
+ssg74
+I246
+sg75
+(dp226
+I241
+S''
+sI242
+S'def require_open_cursor(fn):'
+p227
+sI243
+S'    def _fn(self, *args, **kwargs):'
+p228
+sI244
+S'        if self.cursor == None:'
+p229
+sI245
+S'            raise CursorClosedError()'
+p230
+sI246
+S'        return fn(self, *args, **kwargs)'
+p231
+sI247
+S'    return _fn'
+p232
+sI248
+S''
+sI249
+S'##'
+p233
+sI250
+S'# The class of object returned by the {@link #ConnectionWrapper.cursor cursor method}.'
+p234
+ssg87
+S'(self=<gluon.contrib.pg8000.dbapi.CursorWrapper object>, *args=("SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);",), **kwargs={})'
+p235
+sg89
+S'_fn'
+p236
+sa(dp237
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/dbapi.py'
+p238
+sg68
+(dp239
+S'self._execute'
+p240
+S'<bound method CursorWrapper._execute of <gluon.contrib.pg8000.dbapi.CursorWrapper object>>'
+p241
+sS'self'
+p242
+S'<gluon.contrib.pg8000.dbapi.CursorWrapper object>'
+p243
+sS'args'
+p244
+S'()'
+p245
+sS'operation'
+p246
+S'"SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);"'
+p247
+ssg74
+I317
+sg75
+(dp248
+I320
+S'        new_query, new_args = convert_paramstyle(paramstyle, operation, args)'
+p249
+sI321
+S'        try:'
+p250
+sI312
+S'    @require_open_cursor'
+p251
+sI313
+S'    def execute(self, operation, args=()):'
+p252
+sI314
+S'        if not self._connection.in_transaction:'
+p253
+sI315
+S'            self._connection.begin()'
+p254
+sI316
+S'        self._override_rowcount = None'
+p255
+sI317
+S'        self._execute(operation, args)'
+p256
+sI318
+S''
+sI319
+S'    def _execute(self, operation, args=()):'
+p257
+ssg87
+S'(self=<gluon.contrib.pg8000.dbapi.CursorWrapper object>, operation="SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", args=())'
+p258
+sg89
+g190
+sa(dp259
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/dbapi.py'
+p260
+sg68
+(dp261
+S'new_args'
+p262
+S'()'
+p263
+sS'self.cursor'
+p264
+S'<gluon.contrib.pg8000.interface.Cursor object>'
+p265
+sS'self'
+p266
+S'<gluon.contrib.pg8000.dbapi.CursorWrapper object>'
+p267
+sS'new_query'
+p268
+S'"SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);"'
+p269
+sS'self.cursor.execute'
+p270
+S'<bound method Cursor.execute of <gluon.contrib.pg8000.interface.Cursor object>>'
+p271
+ssg74
+I322
+sg75
+(dp272
+I320
+S'        new_query, new_args = convert_paramstyle(paramstyle, operation, args)'
+p273
+sI321
+S'        try:'
+p274
+sI322
+S'            self.cursor.execute(new_query, *new_args)'
+p275
+sI323
+S'        except ConnectionClosedError:'
+p276
+sI324
+S"            # can't rollback in this case"
+p277
+sI325
+S'            raise'
+p278
+sI326
+S'        except:'
+p279
+sI317
+S'        self._execute(operation, args)'
+p280
+sI318
+S''
+sI319
+S'    def _execute(self, operation, args=()):'
+p281
+ssg87
+S'(self=<gluon.contrib.pg8000.dbapi.CursorWrapper object>, operation="SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", args=())'
+p282
+sg89
+S'_execute'
+p283
+sa(dp284
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/interface.py'
+p285
+sg68
+(dp286
+S'x'
+g117
+sS'args'
+p287
+S'()'
+p288
+sS'builtintype'
+p289
+S"<type 'type'>"
+p290
+sS'self._stmt'
+p291
+S'<gluon.contrib.pg8000.interface.PreparedStatement object>'
+p292
+sS'self'
+p293
+S'<gluon.contrib.pg8000.interface.Cursor object>'
+p294
+sS'self.connection'
+p295
+S'<gluon.contrib.pg8000.interface.Connection object>'
+p296
+sS'global PreparedStatement'
+p297
+S"<class 'gluon.contrib.pg8000.interface.PreparedStatement'>"
+p298
+sS'statement_name'
+p299
+g117
+sS'query'
+p300
+S'"SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);"'
+p301
+ssg74
+I398
+sg75
+(dp302
+I393
+S'                # use PostgreSQL Simple Query Protocol'
+p303
+sI394
+S'                ## print "SimpleQuery:", query'
+p304
+sI395
+S'                self._stmt = SimpleStatement(self.connection, query)'
+p305
+sI396
+S'            else:'
+p306
+sI397
+S'                # use PostgreSQL Extended Query Protocol'
+p307
+sI398
+S'                self._stmt = PreparedStatement(self.connection, query, statement_name="", *[{"type": type(x), "value": x} for x in args])'
+p308
+sI399
+S'            self._stmt.execute(*args, **kwargs)'
+p309
+sI400
+S'        finally:'
+p310
+sI401
+S'            self.connection._unnamed_prepared_statement_lock.release()'
+p311
+sI402
+S''
+ssg87
+S'(self=<gluon.contrib.pg8000.interface.Cursor object>, query="SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", *args=(), **kwargs={})'
+p312
+sg89
+g190
+sa(dp313
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/interface.py'
+p314
+sg68
+(dp315
+S'self.c'
+p316
+S'<gluon.contrib.pg8000.protocol.Connection object>'
+p317
+sS'self'
+p318
+S'<gluon.contrib.pg8000.interface.PreparedStatement object>'
+p319
+sS'self.c.parse'
+p320
+S'<bound method Connection._fn of <gluon.contrib.pg8000.protocol.Connection object>>'
+p321
+sS'self._statement_name'
+p322
+S"''"
+p323
+sS'self._parse_row_desc'
+p324
+g117
+sS'statement'
+p325
+S'"SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);"'
+p326
+sS'types'
+p327
+S'()'
+p328
+ssg74
+I138
+sg75
+(dp329
+I133
+S'        self._statement_name = kwargs.get("statement_name", "pg8000_statement_%s" % self._statement_number)'
+p330
+sI134
+S'        self._row_desc = None'
+p331
+sI135
+S'        self._cached_rows = []'
+p332
+sI136
+S'        self._ongoing_row_count = 0'
+p333
+sI137
+S'        self._command_complete = True'
+p334
+sI138
+S'        self._parse_row_desc = self.c.parse(self._statement_name, statement, types)'
+p335
+sI139
+S'        self._lock = threading.RLock()'
+p336
+sI140
+S''
+sI141
+S'    def close(self):'
+p337
+sI142
+S'        if self._statement_name != "": # don\'t close unnamed statement'
+p338
+ssg87
+S'(self=<gluon.contrib.pg8000.interface.PreparedStatement object>, connection=<gluon.contrib.pg8000.interface.Connection object>, statement="SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", *types=(), **kwargs={\'statement_name\': \'\'})'
+p339
+sg89
+g26
+sa(dp340
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/protocol.py'
+p341
+sg68
+(dp342
+S'self'
+p343
+S'<gluon.contrib.pg8000.protocol.Connection object>'
+p344
+sS'args'
+p345
+S'(\'\', "SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", ())'
+p346
+sS'fn'
+p347
+S'<function parse>'
+p348
+sS'kwargs'
+p349
+g21
+ssg74
+I943
+sg75
+(dp350
+I938
+S''
+sI939
+S'def sync_on_error(fn):'
+p351
+sI940
+S'    def _fn(self, *args, **kwargs):'
+p352
+sI941
+S'        try:'
+p353
+sI942
+S'            self._sock_lock.acquire()'
+p354
+sI943
+S'            return fn(self, *args, **kwargs)'
+p355
+sI944
+S'        except:'
+p356
+sI945
+S'            self._sync()'
+p357
+sI946
+S'            raise'
+p358
+sI947
+S'        finally:'
+p359
+ssg87
+S'(self=<gluon.contrib.pg8000.protocol.Connection object>, *args=(\'\', "SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", ()), **kwargs={})'
+p360
+sg89
+g236
+sa(dp361
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/protocol.py'
+p362
+sg68
+(dp363
+S'reader.handle_messages'
+p364
+S'<bound method MessageReader.handle_messages of <gluon.contrib.pg8000.protocol.MessageReader object>>'
+p365
+sS'reader'
+p366
+S'<gluon.contrib.pg8000.protocol.MessageReader object>'
+p367
+ssg74
+I1104
+sg75
+(dp368
+I1099
+S'        reader.add_message(NoData, lambda msg: (None, param_fc))'
+p369
+sI1100
+S''
+sI1101
+S'        # Common row description response'
+p370
+sI1102
+S'        reader.add_message(RowDescription, lambda msg: (msg, param_fc))'
+p371
+sI1103
+S''
+sI1104
+S'        return reader.handle_messages()'
+p372
+sI1105
+S''
+sI1106
+S'    @sync_on_error'
+p373
+sI1107
+S'    def bind(self, portal, statement, params, parse_data, copy_stream):'
+p374
+sI1108
+S'        self.verifyState("ready")'
+p375
+ssg87
+S'(self=<gluon.contrib.pg8000.protocol.Connection object>, statement=\'\', qs="SELECT AddGeometryColumn (\'\', \'geolocation\', \'location\', 4326, \'GEOMETRY\', 2);", param_types=[])'
+p376
+sg89
+S'parse'
+p377
+sa(dp378
+g66
+S'/home/www-data/web2py/gluon/contrib/pg8000/protocol.py'
+p379
+sg68
+(dp380
+S'exc'
+p381
+S"ProgrammingError('ERROR', '42883', 'function add...nown, integer, unknown, integer) does not exist')"
+p382
+ssg74
+I929
+sg75
+(dp383
+I928
+S'                if not self.delay_raising_exception:'
+p384
+sI929
+S'                    raise exc'
+p385
+sI930
+S'            elif isinstance(msg, NoticeResponse):'
+p386
+sI931
+S'                self._conn.handleNoticeResponse(msg)'
+p387
+sI932
+S'            elif isinstance(msg, ParameterStatus):'
+p388
+sI933
+S'                self._conn.handleParameterStatus(msg)'
+p389
+sI924
+S'            if msg_handled:'
+p390
+sI925
+S'                continue'
+p391
+sI926
+S'            elif isinstance(msg, ErrorResponse):'
+p392
+sI927
+S'                exc = msg.createException()'
+p393
+ssg87
+S'(self=<gluon.contrib.pg8000.protocol.MessageReader object>)'
+p394
+sg89
+S'handle_messages'
+p395
+sasS'pyver'
+p396
+S'Python 2.7.3: /usr/bin/python (prefix: /usr)'
+p397
+sS'session'
+p398
+g61
+(S's\xc7\x01\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_orderby</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_query</td><td style="vertical-align:top;">:</td><td><div>db.agency_program_types.id&gt;0</div></td></tr></table></div>'
+tRp399
+sS'etype'
+p400
+S"<class 'gluon.contrib.pg8000.errors.ProgrammingError'>"
+p401
+sS'date'
+p402
+S'Fri Oct 18 18:01:36 2013'
+p403
+sS'response'
+p404
+g61
+(S's\xc0\x16\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x7f3ed4c04c00&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_childcare</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/index/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_childcare</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/home/www-data/web2py/applications/childcare/sessions/127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1&#x27;, mode &#x27;rb+&#x27; at 0x7f3ed4c06270&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/home/www-data/web2py/applications/childcare/sessions/127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>04db05a8d13b8e8a6e5814b24c960925</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-da67e77a-1d59-4435-ba01-70dff3bf30f1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_childcare</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>childcare</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>appadmin/index.html</div></td></tr></table></div>'
+tRp405
+sS'locals'
+p406
+(dp407
+S'exc'
+p408
+S"ProgrammingError('ERROR', '42883', 'function add...nown, integer, unknown, integer) does not exist')"
+p409
+sS'msg_class'
+p410
+S"<class 'gluon.contrib.pg8000.protocol.RowDescription'>"
+p411
+sS'self'
+p412
+S'<gluon.contrib.pg8000.protocol.MessageReader object>'
+p413
+sg46
+S'()'
+p414
+sS'handler'
+p415
+S'<function <lambda>>'
+p416
+sS'kwargs'
+p417
+g21
+sS'msg'
+p418
+S"<ErrorResponse ERROR 42883 'function addgeometry...nown, integer, unknown, integer) does not exist'>"
+p419
+sS'msg_handled'
+p420
+S'False'
+p421
+sssS'traceback'
+p422
+S'Traceback (most recent call last):\n  File "/home/www-data/web2py/gluon/restricted.py", line 217, in restricted\n    exec ccode in environment\n  File "/home/www-data/web2py/applications/childcare/models/db.py", line 66, in <module>\n    Field(\'location\', \'geometry()\')\n  File "/home/www-data/web2py/gluon/dal.py", line 7895, in define_table\n    table = self.lazy_define_table(tablename,*fields,**args)\n  File "/home/www-data/web2py/gluon/dal.py", line 7932, in lazy_define_table\n    polymodel=polymodel)\n  File "/home/www-data/web2py/gluon/dal.py", line 1007, in create_table\n    self.execute(query)\n  File "/home/www-data/web2py/gluon/dal.py", line 1833, in execute\n    return self.log_execute(*a, **b)\n  File "/home/www-data/web2py/gluon/dal.py", line 1827, in log_execute\n    ret = self.cursor.execute(command, *a[1:], **b)\n  File "/home/www-data/web2py/gluon/contrib/pg8000/dbapi.py", line 246, in _fn\n    return fn(self, *args, **kwargs)\n  File "/home/www-data/web2py/gluon/contrib/pg8000/dbapi.py", line 317, in execute\n    self._execute(operation, args)\n  File "/home/www-data/web2py/gluon/contrib/pg8000/dbapi.py", line 322, in _execute\n    self.cursor.execute(new_query, *new_args)\n  File "/home/www-data/web2py/gluon/contrib/pg8000/interface.py", line 398, in execute\n    self._stmt = PreparedStatement(self.connection, query, statement_name="", *[{"type": type(x), "value": x} for x in args])\n  File "/home/www-data/web2py/gluon/contrib/pg8000/interface.py", line 138, in __init__\n    self._parse_row_desc = self.c.parse(self._statement_name, statement, types)\n  File "/home/www-data/web2py/gluon/contrib/pg8000/protocol.py", line 943, in _fn\n    return fn(self, *args, **kwargs)\n  File "/home/www-data/web2py/gluon/contrib/pg8000/protocol.py", line 1104, in parse\n    return reader.handle_messages()\n  File "/home/www-data/web2py/gluon/contrib/pg8000/protocol.py", line 929, in handle_messages\n    raise exc\nProgrammingError: (\'ERROR\', \'42883\', \'function addgeometrycolumn(unknown, unknown, unknown, integer, unknown, integer) does not exist\')\n'
+p423
+s.

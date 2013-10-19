@@ -1,0 +1,5 @@
+id,Facility Name,Facility Type,Address,County,Phone,Email,Program Type,Age Range,Total License Capacity,Annual Inspection Date,Unannounced Inspection Date,In Compliance,Number of Violations,lat,lng
+2543498,YWCA Spryfield Child Care Centre,Day Care Facility,358 HERRING COVE RD. HALIFAX,Halifax County,902 423-6163,d.snair@ywcahalifax.com,Full Day,6 months to 5 years,70,N/A,03-Apr-13,Yes,0,45.195322,-62.202187
+2541508,Yarmouth Young Learners,Day Care Facility,"25 BEACON ST. YARMOUTH, Nova Scotia, B5A 2W2",Yarmouth County,902-307-2546,yylearners@live.ca,"Full Day,School Age",3 years to 12 years,30,N/A,06-03-2013,Yes,0,45.195001,-62.202166
+2432111,Wonder Kids Childcare,Day Care Facility,584 TOWN RD. FALMOUTH,Hants County,902-472-2247,prim@eastlink.ca,"Part Day,School Age",30 months - 12 years,15,22-Feb-13,20-Aug-13,Yes,0,44.604849,-63.577709
+2432105,Wolfville Children's Centre (Main Street Location),Day Care Facility,329 MAIN ST. WOLFVILLE,Kings County,902-542-5087,wolfville.childrencentre@ns.aliantzinc.ca,School Age,5 years - 12 years,15,10-Sep-13,07-Mar-13,No,1,44.649563,-63.594532
