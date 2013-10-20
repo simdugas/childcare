@@ -8,7 +8,6 @@
 'miss': ['misses'],
 'person': ['people'],
 'quark': ['quarks'],
-'row': ['rows'],
 'shop': ['shops'],
 'this': ['these'],
 'was': ['were'],

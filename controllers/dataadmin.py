@@ -18,29 +18,24 @@ def index():
                     #set columns first time through
                     cols = row
                 else:
-
-
-                    #
-                    #insert facility type
-                    #
                     
                     #check to see if the facility type exists
-                    facility_type = db(db.facility_types.name==row[2]).select().first()
-                    ftid = ''
+                    facility_type = db.facility_types(name=row[2])
+                    ftid = 0
 
                     #insert the facility type if id doesn't exist
                     if not facility_type:
                         ftid = db.facility_types.insert(name=row[2])
 
-
-                    #
-                    # insert agency
-                    #
-
                     #default age min and max to 0    
                     ages = {'min':0, 'max':0}
                     if row[8] != '':    
                         ages = minMaxAges(row[8]);
+
+                    #default compliant to True
+                    compliant = 1
+                    if row[12] == 'No':
+                        compliant = 0
                     
                     #check to see if an agency with this name exists
                     agency_test = db.agencies(name=row[1])
@@ -57,30 +52,23 @@ def index():
                                                        min_age = ages['min'],
                                                        max_age = ages['max'],
                                                        capacity = row[9] if row[9].strip() >= 0 else 0,
-                                                       in_compliance = 0 if row[12] == 'No' else 1
+                                                       #annual_inspection_date = row[10].strip(),
+                                                       #unannounced_inspection_date = row[11].strip(),
+                                                       in_compliance = compliant
                                             
                                             
                                                        )               
 
-
-                    #
-                    #Ok the point insert should go here
-                    #https://groups.google.com/forum/#!topic/web2py/feh1ksfdkGk
-                    
-                    if row[14] != '' and row[15] != '':
-                        lat = row[14]
-                        lng = row[15]
-                        db.geolocation.insert(location="POINT (" + lat + " " + lng + "2)")
-
+                        
                     #split the program types to a collection
                     program_types = row[7].split(',')
-                    program_type_id = ''    
+                        
                     if program_types:
                         for program_type in program_types:
                             
                             #test to see if program type exists
                             p_type = db.program_types(name=program_type)
-                            
+                            program_type_id = ''
                             #if program type does not exist then create it
                             if not p_type:
                                 program_type_id = db.program_types.insert(name = program_type)
@@ -88,7 +76,7 @@ def index():
                                 program_type_id = p_type.id
                             
                             #create record to join program types with agency
-                            db.agency_program_types.insert(agency_id = int(agency_id), program_type_id = int(program_type_id))
+                            db.agency_program_types.insert(agency_id = agency_id, program_type_id = program_type_id)
 
     return dict(form=form)
 
