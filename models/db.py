@@ -34,7 +34,7 @@ db.define_table('phone_number_types',
     format='%(name)s')     
 
 db.define_table('phone_numbers',
-    Field('agency_id', 'references agencies'),
+    Field('agency_id', 'reference agencies'),
     Field('phone_number_type_id', 'reference phone_number_types'),
     Field('phone_number', requires=IS_NOT_EMPTY()),
     Field('created_on', 'datetime', default=request.now),
@@ -59,7 +59,7 @@ db.define_table('files',
     format = '%(filename)s')
 
 db.define_table('geolocation',
-    Field('agency_id', 'references agencies'),
+    Field('agency_id', 'reference agencies'),
     Field('location', 'geometry()')    
     )
 
