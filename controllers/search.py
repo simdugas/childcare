@@ -8,6 +8,10 @@ def index():
 
 #Shows the search results
 def result():
+    import gluon.contrib.simplejson as json
     #Testing the Google Maps API
-    locations = db['geolocation'].select()
-    return dict()
+    agencies = db(
+        (db.geolocation.agency_id==db.agencies.id)
+    ).select().as_list()
+    
+    return dict(agencies=json.dumps(agencies))

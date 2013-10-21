@@ -1,7 +1,8 @@
 {{extend 'layout.html'}}
 <div id="map-canvas"></div>
 <script type="text/javascript">
-  var locations = {{=XML(locations)}}
+  var agencies = {{=XML(agencies)}}
+  console.log(agencies);
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(-34.397, 150.644),
