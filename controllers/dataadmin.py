@@ -67,11 +67,11 @@ def index():
                     #Ok the point insert should go here
                     #https://groups.google.com/forum/#!topic/web2py/feh1ksfdkGk
                     
-                    if row[14] != '' and row[15] != '':
+                    if row[14] != '' and row[15] != '' and agency_id != '':
                         lat = row[14]
                         lng = row[15]
                         db.geolocation.insert(
-                                agency_id=agency_id, 
+                                agency_id=int(agency_id), 
                                 location="POINT (" + lat + " " + lng + "2)"
                                 )
 
