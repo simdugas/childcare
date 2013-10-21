@@ -70,7 +70,10 @@ def index():
                     if row[14] != '' and row[15] != '':
                         lat = row[14]
                         lng = row[15]
-                        db.geolocation.insert(location="POINT (" + lat + " " + lng + "2)")
+                        db.geolocation.insert(
+                                agency_id=agency_id, 
+                                location="POINT (" + lat + " " + lng + "2)"
+                                )
 
                     #split the program types to a collection
                     program_types = row[7].split(',')
