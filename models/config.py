@@ -1,2 +1,2 @@
 ##Stores database connection 
-db = DAL('sqlite://storage.sqlite')
+db = DAL('postgres://childcare:childcare@localhost/childcare, lazy_tables=True')
