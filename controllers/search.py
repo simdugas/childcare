@@ -10,9 +10,15 @@ def index():
 def result():
     import gluon.contrib.simplejson as json
     #Testing the Google Maps API
+    lat = db.geolocation.location.st_x()
+    lng = db.geolocation.location.st_y()
     agencies = db(
         (db.geolocation.agency_id==db.agencies.id)
-    ).select()
+    ).select(db.agencies.ALL,
+            db.geolocation.ALL,
+            lat,
+            lng
+            )
     
     # Create agency list for view
     agency_list = []
@@ -29,7 +35,8 @@ def result():
         add['capacity'] = agency.agencies.capacity
         #add['annual_inspection_date'] = agency.agencies.annual_inspection_date.isoformat()
         add['in_compliance'] = agency.agencies.in_compliance
-        add['geolocation'] = agency.geolocation.location
+        add['lat'] = agency[lat]
+        add['lng'] = agency[lng]
         agency_list.append(add)
     
     return dict(agencies=json.dumps(agency_list))
