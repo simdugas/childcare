@@ -41,16 +41,22 @@ def index():
 
 #Shows the search results
 def result():
+    return dict()
+
+def results(pos):
     import gluon.contrib.simplejson as json
     #Testing the Google Maps API
     lat = db.geolocation.location.st_x()
     lng = db.geolocation.location.st_y()
+    dist = db.geolocation.location.st_distance(geoPoint(pos['lat'], pos['lng']));
     agencies = db(
         (db.geolocation.agency_id==db.agencies.id)
     ).select(db.agencies.ALL,
             db.geolocation.ALL,
             lat,
-            lng
+            lng,
+            orderby=dist,
+            limitby=(0, 10)
             )
     
     # Create agency list for view
@@ -73,3 +79,18 @@ def result():
         agency_list.append(add)
     
     return dict(agencies=json.dumps(agency_list))
+
+@request.restful()
+def api():
+    import gluon.contrib.simplejson as json
+    def GET(*args,**vars):
+        return dict()
+    def POST(*args,**vars):
+        pos = ''
+        pos = json.loads(request.body.read())
+        return results(pos)['agencies']
+    def PUT(*args,**vars):
+        return dict()
+    def DELETE(*args,**vars):
+        return dict()
+    return locals()

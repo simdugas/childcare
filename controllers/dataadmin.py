@@ -61,7 +61,8 @@ def index():
                                             
                                             
                                                        )               
-
+                    else:
+                        agency_id = agency_test.id
 
                     #
                     #Ok the point insert should go here
@@ -114,4 +115,4 @@ def ageFor(age_string):
     if not ageType[0]:
         return 0
     else:
-        return int(ageType[0]) * 12 if ageType[1] == 'years' else ageType[0]
+        return int(float(ageType[0])) * 12 if ageType[1] == 'years' else int(float(ageType[0]))
