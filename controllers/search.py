@@ -1,9 +1,42 @@
 #Defaults to a search form
 def index():
-    #Search form
-    form = FORM(DIV('Where am I'), DIV(INPUT(_name='location')),
-        DIV('Program Type'), DIV(INPUT(_name='program-type')),
-        DIV('Age'), DIV(INPUT(_name='age')), DIV(INPUT(_type='submit')))    
+
+    #create list of program types in the database
+    program_types = dict()
+    for pt in db().select(db.program_types.ALL,cache=(cache.ram,3600)):
+        program_types[pt.id] = pt.name
+
+    # default to program type id in list
+    program_type_default = program_types.keys()[0]
+    # default age? who knows
+    default_age = 12
+
+    ages = range(100)
+
+    form = SQLFORM.factory( 
+        Field('program_type_id',
+              label = 'Program Type',
+              default = program_type_default, 
+              requires = IS_IN_SET(program_types)
+              ),
+        Field('age', 
+              'select',
+              label = 'Age(in months)',
+              default = default_age, 
+              requires = IS_IN_SET(ages)
+              ),
+        Field('userlocation'),
+        _class = 'search-form',
+        submit_button = 'Search'
+      
+        ) 
+
+    if form.process().accepted: 
+        response.flash = request.vars
+    elif form.errors: 
+        response.flash = 'form has errors' 
+
+                    
     return dict(form=form)
 
 #Shows the search results
