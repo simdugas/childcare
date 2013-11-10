@@ -44,19 +44,13 @@ def index():
                                             
                                             
                                                        )               
-<<<<<<< HEAD
+
 
                     if agency_id:
                         insertAgencyLocation(row[14], row[15], agency_id);
                         insertProgramTypes(row[7], agency_id)
-=======
                     else:
                         agency_id = agency_test.id
-
-                    #
-                    #Ok the point insert should go here
-                    #https://groups.google.com/forum/#!topic/web2py/feh1ksfdkGk
->>>>>>> 4c5ef05d899a187e29d1e4652c1331a7b0c194b0
                     
     return locals()
 
@@ -87,7 +81,6 @@ def ageFor(age_string):
     if not ageType[0]:
         return 0
     else:
-<<<<<<< HEAD
         try:
             age = int(ageType[0])
         except ValueError:
@@ -96,6 +89,7 @@ def ageFor(age_string):
             age = 0
             
     return (age * 12 if ageType[1] == 'years' else age)
+
 
 def insertFacilityType(facility_type_name):
     #check to see if the facility type exists
@@ -112,10 +106,7 @@ def insertFacilityType(facility_type_name):
 def insertAgencyLocation(lat, lng, agency_id):
     geolocation_id = ''
     if lat and lng:
-        geolocation_id = db.geolocation.insert(
-            agency_id=int(agency_id), 
-            location="POINT (" + lat + " " + lng + "2)"
-            )
+        geolocation_id = db.geolocation.insert(agency_id=int(agency_id), location="POINT (" + lat + " " + lng + "2)")
     return geolocation_id
 
 def insertProgramTypes(program_types_string, agency_id):
@@ -133,14 +124,8 @@ def insertProgramTypes(program_types_string, agency_id):
             else:
                 program_type_id = exists.id
                 
-    db.agency_program_types.insert(agency_id = agency_id, 
-                                   program_type_id = program_type_id
-                                   )
+    db.agency_program_types.insert(agency_id = agency_id, program_type_id = program_type_id)
 
 def parseDate(date_string):
     return ('' if date_string == 'N/A' else date_string)
 
-
-=======
-        return int(float(ageType[0])) * 12 if ageType[1] == 'years' else int(float(ageType[0]))
->>>>>>> 4c5ef05d899a187e29d1e4652c1331a7b0c194b0
