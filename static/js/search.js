@@ -41,6 +41,7 @@ jQuery(document).ready(function(){
       id: 'pagination'
     }));
     
+
     var iconBase = 'https://maps.google.com/mapfiles/kml/';
     // Creates the map
     function initialize() {
@@ -75,6 +76,9 @@ jQuery(document).ready(function(){
 
   // Ajax call to api to fetch results
   function getResults() {
+
+    //Add form arguments
+
     var pos = getPosition();
     
     // Get values from form
