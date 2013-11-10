@@ -79,6 +79,8 @@ def results(params):
         page = int(params["page"])
         min = (page - 1 ) * 10
         max = page * 10
+    else:
+        page = 1
 
 
     # Use lat and lng of pos
@@ -119,7 +121,12 @@ def results(params):
 
     
     
-    return dict(agencies=json.dumps(agency_list))
+    return json.dumps(
+              dict(numResults=len(agency_list),
+                  page=page,
+                  agencies=agency_list
+              )
+           )
 
 @request.restful()
 def api():
@@ -128,7 +135,7 @@ def api():
         return dict()
     def POST(*args,**vars):
         params = json.loads(request.body.read())
-        return results(params)['agencies']
+        return results(params)
     def PUT(*args,**vars):
         return dict()
     def DELETE(*args,**vars):
