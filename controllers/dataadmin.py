@@ -44,10 +44,19 @@ def index():
                                             
                                             
                                                        )               
+<<<<<<< HEAD
 
                     if agency_id:
                         insertAgencyLocation(row[14], row[15], agency_id);
                         insertProgramTypes(row[7], agency_id)
+=======
+                    else:
+                        agency_id = agency_test.id
+
+                    #
+                    #Ok the point insert should go here
+                    #https://groups.google.com/forum/#!topic/web2py/feh1ksfdkGk
+>>>>>>> 4c5ef05d899a187e29d1e4652c1331a7b0c194b0
                     
     return locals()
 
@@ -78,6 +87,7 @@ def ageFor(age_string):
     if not ageType[0]:
         return 0
     else:
+<<<<<<< HEAD
         try:
             age = int(ageType[0])
         except ValueError:
@@ -131,3 +141,6 @@ def parseDate(date_string):
     return ('' if date_string == 'N/A' else date_string)
 
 
+=======
+        return int(float(ageType[0])) * 12 if ageType[1] == 'years' else int(float(ageType[0]))
+>>>>>>> 4c5ef05d899a187e29d1e4652c1331a7b0c194b0
