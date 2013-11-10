@@ -1,7 +1,7 @@
 from gluon.tools import *
 from gluon.dal import DAL, Field, geoPoint, geoLine, geoPolygon
 auth = Auth(db)
-auth.define_tables()
+auth.define_tables(migrate=False)
 crud = Crud(db)
 
 db.define_table('facility_types',
