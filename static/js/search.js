@@ -38,12 +38,6 @@ jQuery(document).ready(function(){
     // $("#no_table_userlocation__label").hide();
 
     
-/*
-    jQuery('.search-form').submit(function(event) {		
-        //add user location to query string
-        $("#no_table_userlocation").val(JSON.stringify(position));
-    });
-*/
 
     // Creates the map
     function initialize() {
@@ -71,19 +65,38 @@ jQuery(document).ready(function(){
     }
 
   //google.maps.event.addDomListener(window, 'load', initialize);
-    // Fetch results button
+
+  var page = 0;
+  var resultMarkers = [];
 
   // Ajax call to api to fetch results
   function getResults() {
     var pos = getPosition();
+    
+    // Get values from form
+    var program_type_id = $('#no_table_program_type_id option:selected').val();
+    var age = $('#no_table_age:selected').val();
+    page++;
+    var params = {
+      program_type: program_type_id,
+      age: [age],
+      pos: {
+        lat: pos.lat(), 
+        lng: pos.lng()
+      },
+      page: page
+    }
     $.ajax({
         url: "api",
         dataType: "json",
         type: "POST",
-        data: JSON.stringify({lat: pos.lat(), lng: pos.lng()}),
+        data: JSON.stringify(params),
     }).done(function(agencies){
       console.log('success!');
       console.log(agencies);
+
+      clearMarkers();
+
       for(var i = 0; i < 10; i++) {
         var agency = agencies[i];
         //Information popup
@@ -93,6 +106,8 @@ jQuery(document).ready(function(){
           map: map,
           title: agency.name
         });
+        resultMarkers.push(marker);
+
       }
     }).fail(function(){
           alert('failed');
@@ -101,5 +116,22 @@ jQuery(document).ready(function(){
     return;
 
   } // end getResults function
+  
+
+  //clear markers function
+  function clearMarkers() {
+    for(var i = 0; i < resultMarkers.length; i++) {
+      resultMarkers[i].setMap(null);
+    }
+    resultMarkers = [];
+  }
+
+  // Submit form
+  jQuery('.search-form').submit(function(event) {		
+    event.preventDefault();
+    getResults();
+  });
+
+
   
 });

@@ -46,20 +46,56 @@ def search_form():
 def result():
     return dict(form=search_form())
 
-def results(pos):
+def results(params):
     import gluon.contrib.simplejson as json
-    #Testing the Google Maps API
+    
+    # Initialize query
+    agency_query = (db.geolocation.agency_id==db.agencies.id)
+
+
+    if 'pos' in params:
+        pos = params["pos"]
+    else:
+        return dict(error="Query must include a position.")
+    
+
+    if 'program_type' in params:
+        agency_query = agency_query \
+                & (db.agency_program_types.agency_id==db.agencies.id) \
+                & (db.agency_program_types.program_type_id==int(params["program_type"]))
+
+
+    if 'ages' in params:
+        if len(params["ages"]) > 0:
+            min_age = params["ages"][0]
+            max_age = params["ages"][0]
+            agency_query = agency_query \
+                & (db.agencies.min_age<=min_age) \
+                & (db.agencies.max_age>=max_age)
+    
+    min = 0
+    max = 10
+    if 'page' in params:
+        page = int(params["page"])
+        min = (page - 1 ) * 10
+        max = page * 10
+
+
+    # Use lat and lng of pos
     lat = db.geolocation.location.st_x()
     lng = db.geolocation.location.st_y()
+    # Use the distance from position
     dist = db.geolocation.location.st_distance(geoPoint(pos['lat'], pos['lng']));
+    
+    # Query the database for results
     agencies = db(
-        (db.geolocation.agency_id==db.agencies.id)
-    ).select(db.agencies.ALL,
+            agency_query
+        ).select(db.agencies.ALL,
             db.geolocation.ALL,
             lat,
             lng,
             orderby=dist,
-            limitby=(0, 10)
+            limitby=(min, max)
             )
     
     # Create agency list for view
@@ -91,9 +127,8 @@ def api():
     def GET(*args,**vars):
         return dict()
     def POST(*args,**vars):
-        pos = ''
-        pos = json.loads(request.body.read())
-        return results(pos)['agencies']
+        params = json.loads(request.body.read())
+        return results(params)['agencies']
     def PUT(*args,**vars):
         return dict()
     def DELETE(*args,**vars):
