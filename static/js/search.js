@@ -34,16 +34,13 @@ jQuery(document).ready(function(){
     }
 
 
-    // $("#no_table_userlocation").hide();
-    // $("#no_table_userlocation__label").hide();
+    $("#no_table_userlocation").hide();
+    $("#no_table_userlocation__label").hide();
 
     
-/*
     jQuery('.search-form').submit(function(event) {		
-        //add user location to query string
-        $("#no_table_userlocation").val(JSON.stringify(position));
+        getResults();
     });
-*/
 
     // Creates the map
     function initialize() {
@@ -75,6 +72,9 @@ jQuery(document).ready(function(){
 
   // Ajax call to api to fetch results
   function getResults() {
+
+    //Add form arguments
+
     var pos = getPosition();
     $.ajax({
         url: "api",
