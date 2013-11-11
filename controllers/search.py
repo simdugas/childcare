@@ -1,6 +1,16 @@
 #Defaults to a search form
 def index():
+    form = search_form()
 
+    if form.process().accepted: 
+        response.flash = request.vars
+    elif form.errors: 
+        response.flash = 'form has errors' 
+
+                    
+    return dict(form=form)
+
+def search_form():
     #create list of program types in the database
     program_types = dict()
     for pt in db().select(db.program_types.ALL,cache=(cache.ram,3600)):
@@ -27,21 +37,14 @@ def index():
               ),
         Field('userlocation'),
         _class = 'search-form',
-        submit_button = 'Search'
-      
+        submit_button = 'Search'      
         ) 
+    return form;
 
-    if form.process().accepted: 
-        response.flash = request.vars
-    elif form.errors: 
-        response.flash = 'form has errors' 
-
-                    
-    return dict(form=form)
 
 #Shows the search results
 def result():
-    return dict()
+    return dict(form=search_form())
 
 def results(pos):
     import gluon.contrib.simplejson as json
@@ -77,6 +80,8 @@ def results(pos):
         add['lat'] = agency[lat]
         add['lng'] = agency[lng]
         agency_list.append(add)
+
+    
     
     return dict(agencies=json.dumps(agency_list))
 
