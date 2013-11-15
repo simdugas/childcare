@@ -40,17 +40,17 @@ def index():
                                                        capacity = row[9] if row[9].strip() >= 0 else 0,
                                                        in_compliance = 0 if row[12] == 'No' else 1,
                                                        annual_inspection_date = parseDate(row[10]),
-                                                       annual_inspection_date = parseDate(row[11])
-                                            
-                                            
+                                                       unannounced_inspection_date = parseDate(row[11])
                                                        )               
 
 
                     if agency_id:
-                        insertAgencyLocation(row[14], row[15], agency_id);
+                        insertAgencyLocation(row[14], row[15], agency_id)
                         insertProgramTypes(row[7], agency_id)
                     else:
                         agency_id = agency_test.id
+
+                    insertPhoneNumber(row[5], agency_id)
                     
     return locals()
 
@@ -129,3 +129,16 @@ def insertProgramTypes(program_types_string, agency_id):
 def parseDate(date_string):
     return ('' if date_string == 'N/A' else date_string)
 
+def insertPhoneNumber(phone_number_string, agency_id):
+  #match only digits
+    stripped = re.sub(r'\D', '', phone_number_string)
+  #format only first 10 digits matched
+  #assumes a lot but keeps out a lot of garbage as well
+    formatted_phone_number = '0000000000'
+    if stripped.__len__() >= 10:
+        formatted_phone_number = phone_format(stripped[0:9])
+
+    db.phone_numbers.insert(agency_id = agency_id, phone_number = formatted_phone_number)
+
+def phone_format(n):
+    return format(int(n[:-1]), ",").replace(",", "-") + n[-1]  
