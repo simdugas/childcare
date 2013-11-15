@@ -35,7 +35,6 @@ def search_form():
               default = default_age, 
               requires = IS_IN_SET(ages)
               ),
-        Field('userlocation'),
         _class = 'search-form',
         submit_button = 'Search'      
         ) 
