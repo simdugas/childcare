@@ -5,9 +5,9 @@ body {
 .left-sidebar {
   padding: 0;
   margin: 0;
-  width: 20%;
+  width: 19%;
   height: 100%;
-  background-color: black;
+  background-color: white;
 }
 .left-sidebar * {
   padding: 0;
@@ -24,3 +24,44 @@ body {
   height: 100%;
 }
 
+#marker-info {
+  width: 100%;
+  border-top: 2px solid grey;
+}
+
+.marker, .search-form, #pagination { 
+  padding: 15px;
+  font-size: .9em;
+}
+
+.marker:hover { 
+  background-color: #eee;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.search-form td, .search-form select { 
+  padding: 5px;
+ }
+
+.search-form input[type=submit] { 
+  padding: 7px;
+}
+
+.marker-name { 
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.change-page { 
+  margin: 0 7px;
+  color: blue;
+  font-size: 1.2em;
+}
+
+.change-page:hover { 
+  color: red;
+  cursor: pointer;
+ }
