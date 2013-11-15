@@ -1,5 +1,7 @@
 {{left_sidebar_enabled = True}}
 {{block left_sidebar}}
+{{=A(IMG(_src=URL('static/images','logo.png'), _alt="Logo"),
+      _href=URL('search','result'))}}
 {{=form}}
 {{end}}
 {{extend 'lesslayout.html'}}
