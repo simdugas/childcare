@@ -69,6 +69,12 @@ jQuery(document).ready(function(){
           });
     }
 
+    google.maps.event.addDomListener(window, "resize", function() {
+	var center = map.getCenter();
+	google.maps.event.trigger(map, "resize");
+	map.setCenter(center); 
+    });
+
   //google.maps.event.addDomListener(window, 'load', initialize);
   var pageToFetch = 1;
   var resultMarkers = [];
@@ -199,5 +205,10 @@ jQuery(document).ready(function(){
   function showInfo() {
   
   }
+
+  $('.search-expand').click(function() {
+      $('.search-form-wrapper').slideToggle()
+  });
+
 
 });

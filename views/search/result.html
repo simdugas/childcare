@@ -1,15 +1,18 @@
 {{left_sidebar_enabled = True}}
 {{block left_sidebar}}
+<div class="search-form-wrapper">
+<div class="logo">
+{{=A(IMG(_src=URL('static/images','logo.png'), _alt="Logo"),
+      _href=URL('search','result'))}}
+</div>
+<div class="search-form">
 {{=form}}
+</div>  
+</div>
+<div class="search-expand">
+  <span class="search-expand-text">Search Form</span>
+</div>
 {{end}}
 {{extend 'lesslayout.html'}}
 
-
-
 <div id="map-canvas"></div>
-<style>
-  #map-canvas {
-    width: 100%;
-    height: 100%;
-  }
-</style>
