@@ -1,29 +1,19 @@
+html {
+  transition: all 0.75s ease 0s;
+  -moz-transition: all 0.75s ease 0s;
+  -webkit-transition: all 0.75s ease 0s;
+  -o-transition: all 0.75s ease 0s;
+  -ms-transition: all 0.75s ease 0s;
+}
 body {
   margin: 0;
   padding: 0;
 }
-.left-sidebar {
-  padding: 0;
-  margin: 0;
-  width: 19%;
-  height: 100%;
-  background-color: white;
+.main{ 
+  margin: 2px;
+  width: 100%;
+  height: 100%
 }
-.left-sidebar * {
-  padding: 0;
-  margin: 0;
-}
-#main {
-  margin: 0;
-  padding: 0;
-}
-#main .span9 {
-  margin: 0;
-  padding: 0;
-  width: 80%;
-  height: 100%;
-}
-
 #marker-info {
   width: 100%;
   border-top: 2px solid grey;
@@ -42,8 +32,20 @@ body {
   padding-bottom: 14px;
 }
 
-.search-form td, .search-form select { 
+.search-form td {  
   padding: 5px;
+ }
+
+select { 
+  width: 100%;
+ }
+
+.span9{ 
+  width: 83%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  float: right;
  }
 
 .search-form input[type=submit] { 
@@ -65,3 +67,72 @@ body {
   color: red;
   cursor: pointer;
  }
+
+.left-sidebar {
+  width: 17%;
+  background-color: white;
+  float: left;
+}
+
+#main {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#map-canvas{ 
+  height: 100%;
+  width: 100%;
+}
+
+.search-expand {
+  display: none;
+}
+
+
+@media only screen and (max-width: 767px) {
+
+#main{ 
+  position: relative;
+}
+
+.span9 {  
+  height: 60%;
+  width: 100%;
+  padding: 0;
+  margin: 0; 
+  position: absolute;
+  top: 0;
+}
+
+#map-canvas{ 
+  height: 100%;
+  width: 100%;
+}
+
+.left-sidebar{ 
+  width: 100%;
+  position: absolute;
+  top: 65%;
+ }
+
+.search-form-wrapper{ 
+  display: none;
+}
+
+.search-expand{ 
+  display: block;
+  margin-left: 80%;
+  padding: 3px;
+  background: lightblue;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: white;
+}
+
+}
+
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+    /* portrait phones */
+}

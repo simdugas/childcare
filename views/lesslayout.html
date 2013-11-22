@@ -70,7 +70,7 @@
 <body>
     <section id="main" class="main row">
         {{if left_sidebar_enabled:}}
-        <div class="span3 left-sidebar">
+        <div class="left-sidebar">
             {{block left_sidebar}}
 	      
             {{end}}
@@ -84,7 +84,7 @@
         </div>
 
         {{if right_sidebar_enabled:}}
-        <div class="span3">
+        <div class="right-sidebar">
             {{block right_sidebar}}
             <h3>Right Sidebar</h3>
             <p></p>
