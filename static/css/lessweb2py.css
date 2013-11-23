@@ -70,9 +70,11 @@ select {
  }
 
 .left-sidebar {
-  width: 17%;
+  width: 245px;
+  height: 100%;
   background-color: white;
   float: left;
+  overflow: scroll;
 }
 
 #main {
@@ -116,6 +118,7 @@ select {
   width: 100%;
   position: absolute;
   top: 65%;
+  overflow: visible;
  }
 
 .search-form-wrapper{ 

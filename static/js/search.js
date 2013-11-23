@@ -40,7 +40,18 @@ jQuery(document).ready(function(){
     $('.left-sidebar').append($('<div/>', {
       id: 'pagination'
     }));
-    
+
+    //sets the width of the map container
+    function setMapContainerWidth(){
+      if($(window).width() > 767) {
+        $('.span9').width($('.main').width() - $('.left-sidebar').width());
+      } else {
+        $('.span9').width($('.span9').parent().width());
+      }
+    }
+
+    //set initial map width
+    setMapContainerWidth(); 
 
     var iconBase = 'https://maps.google.com/mapfiles/kml/';
     // Creates the map
@@ -76,17 +87,21 @@ jQuery(document).ready(function(){
     }
 
     google.maps.event.addDomListener(window, "resize", function() {
+      setMapContainerWidth();
+      
       var center = map.getCenter();
-      new google.maps.event.trigger(map, "resize");
+      google.maps.event.trigger(map, "resize");
       map.setCenter(center); 
     });
 
   //google.maps.event.addDomListener(window, 'load', initialize);
   var pageToFetch = 1;
-  var resultDict = {};
-  var resultMarkers = [];
-  var resultInfoWindows = [];
-  var openInfoWindow = null;
+  //globals
+  resultDict = {};
+  resultMarkers = [];
+  resultInfoWindows = [];
+  listeners = [];
+  openInfoWindow = null;
 
   //function that displays infoWindow
   function displayInfoWindow(innerKey, resultInfoWindows, resultMarkers){
@@ -94,21 +109,18 @@ jQuery(document).ready(function(){
     console.log("google.maps.event click", innerKey, resultMarkers, resultInfoWindows);
 
     var targetInfoWindow = resultInfoWindows[innerKey];
-    
     var targetMarker = resultMarkers[innerKey];
-
     var center = targetMarker.getPosition();
     
     map.panTo(center);
-
     map.setZoom(16);
 
-    targetInfoWindow.open(map, targetMarker); 
-    
     if (openInfoWindow != null) {
       openInfoWindow.close();
     }
-    
+
+    targetInfoWindow.open(map, targetMarker); 
+        
     openInfoWindow = targetInfoWindow;
 
   }
@@ -122,16 +134,20 @@ jQuery(document).ready(function(){
     var pos = getPosition();
     
     // Get values from form
-    var program_type_id = $('#no_table_program_type_id option:selected').val();
+    var params = {};
+    params.pos = {
+      lat: pos.lat(), 
+      lng: pos.lng()
+    };
+
+    var program_type = $('#no_table_program_type_id option:selected').val();
+    if(program_type != undefined && program_type != '') {
+      params.program_type = program_type
+    }
+
     var age = $('#no_table_age:selected').val();
-    var params = {
-      program_type: program_type_id,
-      age: [age],
-      pos: {
-        lat: pos.lat(), 
-        lng: pos.lng()
-      },
-      page: pageToFetch
+    if(age != undefined && age != '') {
+      params.ages = [age]
     }
 
     // Ajax api call to fetch results
@@ -145,21 +161,21 @@ jQuery(document).ready(function(){
       var page = parseInt(d.page);
       var numResults = parseInt(d.numResults);
       var agencies = d.agencies;
-      
-      //reset markers and infoWindows
-      var resultDict = {};
-      var resultMarkers = [];
-      var resultInfoWindows = [];
 
-
-      console.log('success!');
-      console.log(agencies);
-        
       // Clear markers on map and empty sidebar
-      clearMarkers();
+      clearMarkers(resultMarkers, resultInfoWindows);
+
       $markSidebar = $('#marker-info');
       $markSidebar.empty();
 
+      //reset markers and infoWindows
+      resultDict = {};
+      resultMarkers = [];
+      resultInfoWindows = [];
+
+      console.log('success!');
+      console.log(agencies);
+      
       // Create bounds to set map zoom
       var bounds = new google.maps.LatLngBounds();
 
@@ -190,6 +206,15 @@ jQuery(document).ready(function(){
 
         
         //create the infowindow html
+        var phone_numbers = 
+            $("<div/>", { class: "marker-phone-numbers" }).html(agency.name);
+        
+        for(var j = 0; j < agency.phone_numbers.length; j++) {
+          phone_numbers.append(
+            $("<div/>", { class: "marker-phone-number" }).html(agency.phone_numbers[j])
+          );
+        }
+
         var infoText = $('<div/>', { 
             class: "marker",
             "data-id": agency.id,
@@ -200,6 +225,7 @@ jQuery(document).ready(function(){
             $("<div/>", { class: "marker-name" }).html(agency.name),
             $("<div/>", { class: "marker-street" }).html(agency.street),
             $("<div/>", { class: "marker-county" }).html(agency.county),
+            phone_numbers,
             $("<div/>", { class: "marker-email" }).html(agency.email),
             $("<a />",  { 
               class: "marker-violations",
@@ -220,12 +246,16 @@ jQuery(document).ready(function(){
         resultInfoWindows.push(infoWindow);
 
         //create event listener for the marker
-        google.maps.event.addListener(resultMarkers[key], 'click', function(innerKey){
-          return function(){displayInfoWindow(innerKey, resultInfoWindows, resultMarkers);};
-        }(key));
-
+        listeners.push(
+          google.maps.event.addListener(resultMarkers[key], 'click', function(innerKey){
+            return function(){
+              displayInfoWindow(innerKey, resultInfoWindows, resultMarkers);
+            };
+          }(key))
+        );
       } //end for loop
-      
+
+      $('.left-sidebar #marker-info').unbind();
       $('.left-sidebar #marker-info').on('click', '.marker', function(){ 
 
         var key = resultDict[$(this).attr('data-id')];
@@ -269,11 +299,19 @@ jQuery(document).ready(function(){
 
 
   //clear markers function
-  function clearMarkers() {
+  function clearMarkers(resultMarkers, resultInfoWindows) {
     for(var i = 0; i < resultMarkers.length; i++) {
       resultMarkers[i].setMap(null);
     }
     resultMarkers = [];
+    for(var i = 0; i < resultInfoWindows.length; i++) {
+      resultInfoWindows[i].setMap(null);
+    }
+    openInfoWindow = null;
+    for(var i = 0; i < listeners.length; i++) {
+      google.maps.event.removeListener(listeners[i]);
+    }
+    listeners = [];
   }
 
   // Submit form

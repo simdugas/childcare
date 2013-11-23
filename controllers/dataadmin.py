@@ -136,7 +136,7 @@ def insertPhoneNumber(phone_number_string, agency_id):
   #assumes a lot but keeps out a lot of garbage as well
     formatted_phone_number = '0000000000'
     if stripped.__len__() >= 10:
-        formatted_phone_number = phone_format(stripped[0:9])
+        formatted_phone_number = phone_format(stripped[0:10])
 
     db.phone_numbers.insert(agency_id = agency_id, phone_number = formatted_phone_number)
 
