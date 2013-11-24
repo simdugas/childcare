@@ -16,24 +16,19 @@ def search_form():
     for pt in db().select(db.program_types.ALL,cache=(cache.ram,3600)):
         program_types[pt.id] = pt.name
 
-    # default to program type id in list
-    program_type_default = program_types.keys()[0]
-    # default age? who knows
-    default_age = 12
-
     ages = range(100)
 
     form = SQLFORM.factory( 
         Field('program_type_id',
               label = 'Program Type',
-              default = program_type_default, 
-              requires = IS_IN_SET(program_types)
+              default = None,
+              requires = IS_IN_SET(program_types, zero='All')
               ),
         Field('age', 
               'select',
               label = 'Age(in months)',
-              default = default_age, 
-              requires = IS_IN_SET(ages)
+              default = None,
+              requires = IS_IN_SET(ages, zero='All')
               ),
         _class = 'search-form',
         submit_button = 'Search'      
@@ -102,6 +97,7 @@ def results(params):
     # Create agency list for view
     agency_list = []
     for agency in agencies:
+
         add = dict()
         add['id'] = agency.agencies.id
         add['childcare_provider_id'] = agency.agencies.childcare_provider_id
@@ -116,6 +112,17 @@ def results(params):
         add['in_compliance'] = agency.agencies.in_compliance
         add['lat'] = agency[lat]
         add['lng'] = agency[lng]
+        
+        #Get phone numbers
+        phone_numbers = db(
+                    (db.phone_numbers.agency_id==agency.agencies.id)
+                ).select()
+        
+        #Add phone numbers
+        add['phone_numbers'] = []
+        for num in phone_numbers:
+            add['phone_numbers'].append(num.phone_number)
+
         agency_list.append(add)
 
     

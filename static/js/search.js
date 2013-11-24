@@ -40,7 +40,18 @@ jQuery(document).ready(function(){
     $('.left-sidebar').append($('<div/>', {
       id: 'pagination'
     }));
-    
+
+    //sets the width of the map container
+    function setMapContainerWidth(){
+      if($(window).width() > 767) {
+        $('.span9').width($('.main').width() - $('.left-sidebar').width());
+      } else {
+        $('.span9').width($('.span9').parent().width());
+      }
+    }
+
+    //set initial map width
+    setMapContainerWidth(); 
 
     var iconBase = 'https://maps.google.com/mapfiles/kml/';
     // Creates the map
@@ -53,6 +64,12 @@ jQuery(document).ready(function(){
       var mapOptions = {
         center: ctr,
         zoom: 14,
+        panControl: false,
+        zoomControl: false,
+        scaleControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        overviewMapControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
@@ -70,16 +87,45 @@ jQuery(document).ready(function(){
     }
 
     google.maps.event.addDomListener(window, "resize", function() {
-	var center = map.getCenter();
-	google.maps.event.trigger(map, "resize");
-	map.setCenter(center); 
+      setMapContainerWidth();
+      
+      var center = map.getCenter();
+      google.maps.event.trigger(map, "resize");
+      map.setCenter(center); 
     });
 
   //google.maps.event.addDomListener(window, 'load', initialize);
   var pageToFetch = 1;
-  var resultMarkers = [];
-  var openInfoWindow = null;
+  //globals
+  resultDict = {};
+  resultMarkers = [];
+  resultInfoWindows = [];
+  listeners = [];
+  openInfoWindow = null;
 
+  //function that displays infoWindow
+  function displayInfoWindow(innerKey, resultInfoWindows, resultMarkers){
+    
+    console.log("google.maps.event click", innerKey, resultMarkers, resultInfoWindows);
+
+    var targetInfoWindow = resultInfoWindows[innerKey];
+    var targetMarker = resultMarkers[innerKey];
+    var center = targetMarker.getPosition();
+    
+    map.panTo(center);
+    map.setZoom(16);
+
+    if (openInfoWindow != null) {
+      openInfoWindow.close();
+    }
+
+    targetInfoWindow.open(map, targetMarker); 
+        
+    openInfoWindow = targetInfoWindow;
+
+  }
+
+  
   // Ajax call to api to fetch results
   function getResults() {
 
@@ -88,16 +134,20 @@ jQuery(document).ready(function(){
     var pos = getPosition();
     
     // Get values from form
-    var program_type_id = $('#no_table_program_type_id option:selected').val();
+    var params = {};
+    params.pos = {
+      lat: pos.lat(), 
+      lng: pos.lng()
+    };
+
+    var program_type = $('#no_table_program_type_id option:selected').val();
+    if(program_type != undefined && program_type != '') {
+      params.program_type = program_type
+    }
+
     var age = $('#no_table_age:selected').val();
-    var params = {
-      program_type: program_type_id,
-      age: [age],
-      pos: {
-        lat: pos.lat(), 
-        lng: pos.lng()
-      },
-      page: pageToFetch
+    if(age != undefined && age != '') {
+      params.ages = [age]
     }
 
     // Ajax api call to fetch results
@@ -107,54 +157,115 @@ jQuery(document).ready(function(){
         type: "POST",
         data: JSON.stringify(params),
     }).done(function(d){
+      //create data objects
       var page = parseInt(d.page);
       var numResults = parseInt(d.numResults);
       var agencies = d.agencies;
 
-      console.log('success!');
-      console.log(agencies);
-        
       // Clear markers on map and empty sidebar
-      clearMarkers();
+      clearMarkers(resultMarkers, resultInfoWindows);
+
       $markSidebar = $('#marker-info');
       $markSidebar.empty();
+
+      //reset markers and infoWindows
+      resultDict = {};
+      resultMarkers = [];
+      resultInfoWindows = [];
+
+      console.log('success!');
+      console.log(agencies);
+      
+      // Create bounds to set map zoom
+      var bounds = new google.maps.LatLngBounds();
 
       // Write markers and infowindows on map
       for(var i = 0; i < 10; i++) {
         var agency = agencies[i];
-                       
+        var center = new google.maps.LatLng(agency.lat, agency.lng);
+    
+        // add point to bounds
+        bounds.extend(center);
+    
+        //get the marker/infowindow key
+        var key = resultMarkers.length;
+
+        //add key to result dictionary
+        resultDict[agency.id] = key;
+
+
+        //create the marker
         var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(agency.lat, agency.lng),
+          position: center, 
           map: map,
           title: agency.name
         });
+        
+        //add marker to array
+        resultMarkers.push(marker);
 
         
-        var infoText = $('<div/>', { class: "marker"})
-          .append(
+        //create the infowindow html
+        var phone_numbers = 
+            $("<div/>", { class: "marker-phone-numbers" }).html(agency.name);
+        
+        for(var j = 0; j < agency.phone_numbers.length; j++) {
+          phone_numbers.append(
+            $("<div/>", { class: "marker-phone-number" }).html(agency.phone_numbers[j])
+          );
+        }
+
+        var infoText = $('<div/>', { 
+            class: "marker",
+            "data-id": agency.id,
+            "data-childcare-provider-id": agency.childcare_provider_id,
+            "data-lat": agency.lat,
+            "data-lng": agency.lng
+        }).append(
             $("<div/>", { class: "marker-name" }).html(agency.name),
             $("<div/>", { class: "marker-street" }).html(agency.street),
             $("<div/>", { class: "marker-county" }).html(agency.county),
-            $("<div/>", { class: "marker-email" }).html(agency.email)
+            phone_numbers,
+            $("<div/>", { class: "marker-email" }).html(agency.email),
+            $("<a />",  { 
+              class: "marker-violations",
+              target: "_blank",
+              href: "https://nsbr-online-services.gov.ns.ca"
+                + "/DCSOnline/ECDS/displayViolationsPage.action?facID=" 
+                + agency.childcare_provider_id
+            }).html("violations")
           );
-
+        
+        //add infoText to the sidebar
         $markSidebar.append( infoText );
 
+        // create infoWindow
         var infoWindow = new google.maps.InfoWindow({ content: infoText.html() });
 
-        google.maps.event.addListener(marker, 'click', (function(marker, infoWindow){
-            return function() {
-                infoWindow.open(map, marker);
-                if (openInfoWindow != null) {
-                  openInfoWindow.close();
-                }
-                openInfoWindow = infoWindow;
+        //add to results array
+        resultInfoWindows.push(infoWindow);
+
+        //create event listener for the marker
+        listeners.push(
+          google.maps.event.addListener(resultMarkers[key], 'click', function(innerKey){
+            return function(){
+              displayInfoWindow(innerKey, resultInfoWindows, resultMarkers);
             };
-        })(marker, infoWindow));
+          }(key))
+        );
+      } //end for loop
 
-        resultMarkers.push(marker);
+      $('.left-sidebar #marker-info').unbind();
+      $('.left-sidebar #marker-info').on('click', '.marker', function(){ 
 
-      }
+        var key = resultDict[$(this).attr('data-id')];
+
+        displayInfoWindow(key, resultInfoWindows, resultMarkers);
+
+      });
+
+      // set map zoom
+      map.fitBounds(bounds);
 
       // Generate the pagination
       var $pagination = $('#pagination');
@@ -184,14 +295,23 @@ jQuery(document).ready(function(){
     return;
 
   } // end getResults function
-  
+
+
 
   //clear markers function
-  function clearMarkers() {
+  function clearMarkers(resultMarkers, resultInfoWindows) {
     for(var i = 0; i < resultMarkers.length; i++) {
       resultMarkers[i].setMap(null);
     }
     resultMarkers = [];
+    for(var i = 0; i < resultInfoWindows.length; i++) {
+      resultInfoWindows[i].setMap(null);
+    }
+    openInfoWindow = null;
+    for(var i = 0; i < listeners.length; i++) {
+      google.maps.event.removeListener(listeners[i]);
+    }
+    listeners = [];
   }
 
   // Submit form
@@ -200,15 +320,25 @@ jQuery(document).ready(function(){
     getResults();
   });
   
-
-  // 
-  function showInfo() {
-  
-  }
-
   $('.search-expand').click(function() {
       $('.search-form-wrapper').slideToggle()
   });
 
-
+  // sidebar element click focuses map
+  /*
+  $('.left-sidebar .marker').on('click', function() {
+    var id = $(this).attr('data-id');
+    var index = resultDict[id];
+    var marker = resultMarkers[index];
+    var infoWindow = resultInfoWindows[index];
+    console.log(marker, infoWindow);
+    new google.maps.trigger(marker, 'click');
+    var center = new google.maps.LatLng($(this).attr("data-lat"), $(this).attr("data-lng"));
+    map.panTo(center);
+    map.setZoom(6);
+  });
+*/
 });
+
+
+
