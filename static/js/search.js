@@ -11,12 +11,10 @@ jQuery(document).ready(function(){
     var position = initDefaultLocation(); 
 
     function setPosition(p){
-        console.log(p);
         position = p;
     }
 
     function getPosition(){
-        console.log("GET ", position);
         return position;
     }
 
@@ -105,8 +103,6 @@ jQuery(document).ready(function(){
 
   //function that displays infoWindow
   function displayInfoWindow(innerKey, resultInfoWindows, resultMarkers){
-    
-    console.log("google.maps.event click", innerKey, resultMarkers, resultInfoWindows);
 
     var targetInfoWindow = resultInfoWindows[innerKey];
     var targetMarker = resultMarkers[innerKey];
@@ -173,9 +169,6 @@ jQuery(document).ready(function(){
       resultMarkers = [];
       resultInfoWindows = [];
 
-      console.log('success!');
-      console.log(agencies);
-      
       // Create bounds to set map zoom
       var bounds = new google.maps.LatLngBounds();
 
@@ -324,20 +317,6 @@ jQuery(document).ready(function(){
       $('.search-form-wrapper').slideToggle()
   });
 
-  // sidebar element click focuses map
-  /*
-  $('.left-sidebar .marker').on('click', function() {
-    var id = $(this).attr('data-id');
-    var index = resultDict[id];
-    var marker = resultMarkers[index];
-    var infoWindow = resultInfoWindows[index];
-    console.log(marker, infoWindow);
-    new google.maps.trigger(marker, 'click');
-    var center = new google.maps.LatLng($(this).attr("data-lat"), $(this).attr("data-lng"));
-    map.panTo(center);
-    map.setZoom(6);
-  });
-*/
 });
 
 
